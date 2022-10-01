@@ -1,10 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    if(localStorage.getItem('cart')){
-        carrito = JSON.parse(localStorage.getItem('cart'))
-        renderizarCarrito()
-    }
-    
+    localStorage.getItem('cart') && (carrito = JSON.parse(localStorage.getItem('cart'))) && renderizarCarrito()
 })
 
 
@@ -122,12 +118,13 @@ function borrarItemCarrito(e) {
   botonVaciar.addEventListener("click", vaciarCarrito);
 
   function finalizarCompra(){
-    let desabilitar = false
 
     if (carrito.length === 0){
       swal("Carrito vacio")
     }else{
       swal("Compra finalizada","" ,"success")
+      carrito = []
+      renderizarCarrito()
     } 
   }
   botonFinalizar.addEventListener("click",finalizarCompra)
@@ -145,17 +142,10 @@ formulario.addEventListener('submit', (e)=>{
     let mail = document.getElementById('femail').value
     console.log(mail);
 
-    if(fname.value === "" || femail.value === ""){
-        text2.textContent = 'Rellenar todos los campos'
-    }else{
-        swal(`El formulario fue enviado con éxito. Gracias ${fname.value}`);
-    }
+  (fname.value === "" || femail.value === "") ? text2.textContent = 'Rellenar todos los campos' : swal(`El formulario fue enviado con éxito. Gracias ${fname.value}`);
 });
 
-
-
-  //mostrarProductos();
-  renderizarCarrito();
+renderizarCarrito();
 
 
 
